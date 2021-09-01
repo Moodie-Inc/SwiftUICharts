@@ -37,21 +37,26 @@ internal struct ColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
     @State private var startAnimation: Bool = false
     
     internal var body: some View {
-        RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
-                                 tr: chartData.barStyle.cornerRadius.top,
-                                 bl: chartData.barStyle.cornerRadius.bottom,
-                                 br: chartData.barStyle.cornerRadius.bottom)
-            .fill(colour)
-            .scaleEffect(y: startAnimation ? CGFloat(dataPoint.value / chartData.maxValue) : 0, anchor: .bottom)
-            .scaleEffect(x: chartData.barStyle.barWidth, anchor: .center)
-            .background(Color(.gray).opacity(0.000000001))
-            .animateOnAppear(using: chartData.chartStyle.globalAnimation) {
-                self.startAnimation = true
+        VStack {
+            if let dataPoint.topImage {
+                dataPoint.topImage
             }
-            .animateOnDisappear(using: chartData.chartStyle.globalAnimation) {
-                self.startAnimation = false
-            }
-            .accessibilityValue(dataPoint.getCellAccessibilityValue(specifier: chartData.infoView.touchSpecifier))
+            RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
+                                     tr: chartData.barStyle.cornerRadius.top,
+                                     bl: chartData.barStyle.cornerRadius.bottom,
+                                     br: chartData.barStyle.cornerRadius.bottom)
+                .fill(colour)
+                .scaleEffect(y: startAnimation ? CGFloat(dataPoint.value / chartData.maxValue) : 0, anchor: .bottom)
+                .scaleEffect(x: chartData.barStyle.barWidth, anchor: .center)
+                .background(Color(.gray).opacity(0.000000001))
+                .animateOnAppear(using: chartData.chartStyle.globalAnimation) {
+                    self.startAnimation = true
+                }
+                .animateOnDisappear(using: chartData.chartStyle.globalAnimation) {
+                    self.startAnimation = false
+                }
+                .accessibilityValue(dataPoint.getCellAccessibilityValue(specifier: chartData.infoView.touchSpecifier))
+        }
     }
 }
 
