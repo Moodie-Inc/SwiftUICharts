@@ -77,32 +77,36 @@ internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
     @State private var startAnimation: Bool = false
     
     internal var body: some View {
-        VStack {
-            if let topImage = dataPoint.topImage {
-                Image(topImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
-            ZStack(alignment: .bottom) {
-                RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
-                                         tr: chartData.barStyle.cornerRadius.top,
-                                         bl: chartData.barStyle.cornerRadius.bottom,
-                                         br: chartData.barStyle.cornerRadius.bottom)
-                    .fill(colour)
-                    .scaleEffect(y: startAnimation ? CGFloat(dataPoint.value / chartData.maxValue) : 0, anchor: .bottom)
-                    .scaleEffect(x: chartData.barStyle.barWidth, anchor: .center)
-                    .background(Color(.gray).opacity(0.000000001))
-                    .animateOnAppear(using: chartData.chartStyle.globalAnimation) {
-                        self.startAnimation = true
-                    }
-                    .animateOnDisappear(using: chartData.chartStyle.globalAnimation) {
-                        self.startAnimation = false
-                    }
-                    .accessibilityValue(dataPoint.getCellAccessibilityValue(specifier: chartData.infoView.touchSpecifier))
-                if let bottomImage = dataPoint.bottomImage {
-                    Image(bottomImage)
+        GeometryReader { geo in
+            VStack {
+                if let topImage = dataPoint.topImage {
+                    Image(topImage)
                         .resizable()
+                        .frame(width: geo.size.width * 0.5)
                         .aspectRatio(contentMode: .fit)
+                }
+                ZStack(alignment: .bottom) {
+                    RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
+                                             tr: chartData.barStyle.cornerRadius.top,
+                                             bl: chartData.barStyle.cornerRadius.bottom,
+                                             br: chartData.barStyle.cornerRadius.bottom)
+                        .fill(colour)
+                        .scaleEffect(y: startAnimation ? CGFloat(dataPoint.value / chartData.maxValue) : 0, anchor: .bottom)
+                        .scaleEffect(x: chartData.barStyle.barWidth, anchor: .center)
+                        .background(Color(.gray).opacity(0.000000001))
+                        .animateOnAppear(using: chartData.chartStyle.globalAnimation) {
+                            self.startAnimation = true
+                        }
+                        .animateOnDisappear(using: chartData.chartStyle.globalAnimation) {
+                            self.startAnimation = false
+                        }
+                        .accessibilityValue(dataPoint.getCellAccessibilityValue(specifier: chartData.infoView.touchSpecifier))
+                    if let bottomImage = dataPoint.bottomImage {
+                        Image(bottomImage)
+                            .resizable()
+                            .frame(width: geo.size.width * 0.5)
+                            .aspectRatio(contentMode: .fit)
+                    }
                 }
             }
         }
