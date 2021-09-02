@@ -81,6 +81,7 @@ internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
             if let topImage = dataPoint.topImage {
                 Image(topImage)
                     .resizable()
+                    .aspectRatio(contentMode: .fit)
             }
             ZStack(alignment: .bottom) {
                 RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
@@ -101,6 +102,7 @@ internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
                 if let bottomImage = dataPoint.bottomImage {
                     Image(bottomImage)
                         .resizable()
+                        .aspectRatio(contentMode: .fit)
                 }
             }
         }
