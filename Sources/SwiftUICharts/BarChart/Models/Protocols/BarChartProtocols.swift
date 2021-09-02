@@ -120,8 +120,8 @@ public protocol CTBarColourProtocol {
  A protocol to extend functionality of `CTBarDataPointBaseProtocol` specifically for standard Bar Charts.
  */
 public protocol CTStandardBarDataPoint: CTBarDataPointBaseProtocol, CTStandardDataPointProtocol, CTBarColourProtocol, CTnotRanged {
-    var topImage: Image? { get set }
-    var bottomImage: Image? { get set }
+    var topImage: String? { get set }
+    var bottomImage: String? { get set }
 }
 
 /**

@@ -79,7 +79,7 @@ internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
     internal var body: some View {
         VStack {
             if let topImage = dataPoint.topImage {
-                topImage
+                Image(topImage)
             }
             ZStack(alignment: .bottom) {
                 RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
@@ -98,7 +98,7 @@ internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
                     }
                     .accessibilityValue(dataPoint.getCellAccessibilityValue(specifier: chartData.infoView.touchSpecifier))
                 if let bottomImage = dataPoint.bottomImage {
-                    bottomImage
+                    Image(bottomImage)
                 }
             }
         }
