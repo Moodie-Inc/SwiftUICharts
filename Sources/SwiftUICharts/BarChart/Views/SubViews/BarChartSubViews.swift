@@ -28,7 +28,7 @@ internal struct BarChartBarStyleSubView<CD: BarChartData>: View {
            let colour = chartData.barStyle.colour.colour
         {
             ForEach(chartData.dataSets.dataPoints) { dataPoint in
-                ColourBar(chartData: chartData,
+                StandardColourBar(chartData: chartData,
                           dataPoint: dataPoint,
                           colour: colour)
             }

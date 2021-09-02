@@ -38,9 +38,6 @@ internal struct ColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
     
     internal var body: some View {
         VStack {
-            if let dataPoint.topImage {
-                dataPoint.topImage
-            }
             RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
                                      tr: chartData.barStyle.cornerRadius.top,
                                      bl: chartData.barStyle.cornerRadius.bottom,
@@ -60,6 +57,53 @@ internal struct ColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
     }
 }
 
+internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
+                          DP: CTStandardBarDataPoint>: View {
+    
+    private let chartData: CD
+    private let colour: Color
+    private let dataPoint: DP
+    
+    internal init(
+        chartData: CD,
+        dataPoint: DP,
+        colour: Color
+    ) {
+        self.chartData = chartData
+        self.dataPoint = dataPoint
+        self.colour = colour
+    }
+    
+    @State private var startAnimation: Bool = false
+    
+    internal var body: some View {
+        VStack {
+            if let topImage = dataPoint.topImage {
+                topImage
+            }
+            ZStack(alignment: .bottom) {
+                RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
+                                         tr: chartData.barStyle.cornerRadius.top,
+                                         bl: chartData.barStyle.cornerRadius.bottom,
+                                         br: chartData.barStyle.cornerRadius.bottom)
+                    .fill(colour)
+                    .scaleEffect(y: startAnimation ? CGFloat(dataPoint.value / chartData.maxValue) : 0, anchor: .bottom)
+                    .scaleEffect(x: chartData.barStyle.barWidth, anchor: .center)
+                    .background(Color(.gray).opacity(0.000000001))
+                    .animateOnAppear(using: chartData.chartStyle.globalAnimation) {
+                        self.startAnimation = true
+                    }
+                    .animateOnDisappear(using: chartData.chartStyle.globalAnimation) {
+                        self.startAnimation = false
+                    }
+                    .accessibilityValue(dataPoint.getCellAccessibilityValue(specifier: chartData.infoView.touchSpecifier))
+                if let bottomImage = dataPoint.bottomImage {
+                    bottomImage
+                }
+            }
+        }
+    }
+}
 
 // MARK: Gradient
 /**

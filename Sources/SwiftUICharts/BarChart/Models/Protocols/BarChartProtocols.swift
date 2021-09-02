@@ -106,10 +106,7 @@ public protocol CTRangedBarChartDataSet: CTStandardBarChartDataSet  {}
  
  This is base to specify conformance for generics.
  */
-public protocol CTBarDataPointBaseProtocol: CTLineBarDataPointProtocol {
-    var topImage: Image? { get set }
-    var bottomImage: Image? { get set }
-}
+public protocol CTBarDataPointBaseProtocol: CTLineBarDataPointProtocol {}
 
 /**
  A protocol to a standard colour scheme for bar charts.
@@ -123,6 +120,8 @@ public protocol CTBarColourProtocol {
  A protocol to extend functionality of `CTBarDataPointBaseProtocol` specifically for standard Bar Charts.
  */
 public protocol CTStandardBarDataPoint: CTBarDataPointBaseProtocol, CTStandardDataPointProtocol, CTBarColourProtocol, CTnotRanged {
+    var topImage: Image? { get set }
+    var bottomImage: Image? { get set }
 }
 
 /**
