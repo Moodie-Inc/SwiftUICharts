@@ -57,7 +57,7 @@ internal struct ColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
     }
 }
 
-internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
+internal struct StandardColourBar<CD: BarChartData,
                           DP: CTStandardBarDataPoint>: View {
     
     private let chartData: CD
@@ -80,9 +80,10 @@ internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
         GeometryReader { geo in
             VStack {
                 if let topImage = dataPoint.topImage {
+                    let width = 168 / chartData.dataSets.dataPoints.count
                     Image(topImage)
                         .resizable()
-                        .frame(width: 30, height: 30)
+                        .frame(width: CGFloat(width), height: CGFloat(width))
                         .scaledToFit()
                 }
                 ZStack(alignment: .bottom) {
@@ -102,9 +103,10 @@ internal struct StandardColourBar<CD: CTBarChartDataProtocol & GetDataProtocol,
                         }
                         .accessibilityValue(dataPoint.getCellAccessibilityValue(specifier: chartData.infoView.touchSpecifier))
                     if let bottomImage = dataPoint.bottomImage {
+                        let width = 168 / chartData.dataSets.dataPoints.count
                         Image(bottomImage)
                             .resizable()
-                            .frame(width: 30, height: 30)
+                            .frame(width: CGFloat(width), height: CGFloat(width))
                             .scaledToFit()
                     }
                 }
