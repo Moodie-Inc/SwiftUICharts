@@ -83,8 +83,8 @@ internal struct StandardColourBar<CD: BarChartData,
                     let width = 168 / chartData.dataSets.dataPoints.count
                     Image(topImage)
                         .resizable()
-                        .frame(width: CGFloat(width), height: CGFloat(width))
                         .scaledToFit()
+                        .frame(width: CGFloat(width), height: CGFloat(width))
                 }
                 ZStack(alignment: .bottom) {
                     RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
@@ -106,8 +106,9 @@ internal struct StandardColourBar<CD: BarChartData,
                         let width = 168 / chartData.dataSets.dataPoints.count
                         Image(bottomImage)
                             .resizable()
-                            .frame(width: CGFloat(width), height: CGFloat(width))
                             .scaledToFit()
+                            .frame(width: CGFloat(width), height: CGFloat(width))
+                            .padding(.bottom)
                     }
                 }
             }
