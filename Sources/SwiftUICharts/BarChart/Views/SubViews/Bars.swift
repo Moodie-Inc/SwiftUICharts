@@ -108,7 +108,7 @@ internal struct StandardColourBar<CD: BarChartData,
                             .resizable()
                             .scaledToFit()
                             .frame(width: CGFloat(width), height: CGFloat(width))
-                            .padding(.bottom)
+                            .padding(.bottom, 1)
                     }
                 }
             }
