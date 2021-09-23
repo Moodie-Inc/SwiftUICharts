@@ -78,6 +78,7 @@ internal struct StandardColourBar<CD: BarChartData,
     
     internal var body: some View {
         GeometryReader { geo in
+            let percent = CGFloat(dataPoint.value / charData.maxValue)
             VStack {
                 if let topImage = dataPoint.topImage {
                     let width = 168 / chartData.dataSets.dataPoints.count
@@ -85,6 +86,7 @@ internal struct StandardColourBar<CD: BarChartData,
                         .resizable()
                         .scaledToFit()
                         .frame(width: CGFloat(width), height: CGFloat(width))
+                        .offset(x: 0, y: percent * geo.size.height)
                 }
                 ZStack(alignment: .bottom) {
                     RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
@@ -92,7 +94,7 @@ internal struct StandardColourBar<CD: BarChartData,
                                              bl: chartData.barStyle.cornerRadius.bottom,
                                              br: chartData.barStyle.cornerRadius.bottom)
                         .fill(colour)
-                        .scaleEffect(y: startAnimation ? CGFloat(dataPoint.value / chartData.maxValue) : 0, anchor: .bottom)
+                        .scaleEffect(y: startAnimation ? percent : 0, anchor: .bottom)
                         .scaleEffect(x: chartData.barStyle.barWidth, anchor: .center)
                         .background(Color(.gray).opacity(0.000000001))
                         .animateOnAppear(using: chartData.chartStyle.globalAnimation) {
