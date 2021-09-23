@@ -79,14 +79,17 @@ internal struct StandardColourBar<CD: BarChartData,
     internal var body: some View {
         GeometryReader { geo in
             let percent = CGFloat(dataPoint.value / chartData.maxValue)
-            VStack {
-                if let topImage = dataPoint.topImage {
-                    let width = 168 / chartData.dataSets.dataPoints.count
-                    Image(topImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: CGFloat(width), height: CGFloat(width))
-                        .offset(x: 0, y: geo.size.height - (percent * geo.size.height))
+            ZStack {
+                VStack {
+                    if let topImage = dataPoint.topImage {
+                        let width = 168 / chartData.dataSets.dataPoints.count
+                        Image(topImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: CGFloat(width), height: CGFloat(width))
+                            .offset(x: 0, y: geo.size.height - (percent * geo.size.height))
+                        Spacer()
+                    }
                 }
                 ZStack(alignment: .bottom) {
                     RoundedRectangleBarShape(tl: chartData.barStyle.cornerRadius.top,
