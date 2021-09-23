@@ -78,7 +78,7 @@ internal struct StandardColourBar<CD: BarChartData,
     
     internal var body: some View {
         GeometryReader { geo in
-            let percent = CGFloat(dataPoint.value / charData.maxValue)
+            let percent = CGFloat(dataPoint.value / chartData.maxValue)
             VStack {
                 if let topImage = dataPoint.topImage {
                     let width = 168 / chartData.dataSets.dataPoints.count
